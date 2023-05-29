@@ -1,0 +1,163 @@
+import pandas as pd
+import numpy as np
+df =pd.read_csv("/content/drive/MyDrive/facebook.csv" , sep=";")
+df
+df.describe()
+#subset creation
+#subset1
+df1=df[['Page total likes', 'Category', 'Post Month','Post Weekday']].loc[0:7]
+df1
+#subset2
+df2=df[['Page total likes', 'Category', 'Post Month','Post Weekday']].loc[10:20]
+df2
+#concat
+merge=pd.concat([df1,df2,df3])
+merge
+#sort data
+sort_values=df.sort_values('Page total likes' , ascending=False)
+sort_values
+#transposing
+df.transpose()
+#reshaping
+pivot_table = pd.pivot_table(df ,index= ['Type','Category'],values='share')
+print(pivot_table)
+#extra command to  reshape data usding array
+reshapping_arr=np.array([1,2,3,4,5,6])
+reshapping_arr.reshape(2,3)
+
+
+#data cleaning
+import pandas as pd
+import numpy as np
+df=pd.read_csv('heartdisease.csv')
+df
+df.head()
+columns=list(df.columns)
+columns
+print("Missing values distribution:")
+print(df.isnull().mean())
+print("")
+print("Column datatypes: ")
+print(df.dtypes)
+print(df.isnull().sum())
+df=df.fillna(0)
+df=df.fillna(df.mean())
+df=df.fillna(method ='ffill')
+print(df.duplicated().sum())
+df=df.drop_duplicates()
+print(df.isnull().mean())
+#Data Integration
+subset=df.iloc[0:22, 0:6]
+subset
+subset1=df.iloc[0:22, 8:12]
+subset1
+subset2=df.iloc[0:22, 11:14]
+subset2
+display(pd.concat([subset,subset1]))
+display(pd.concat([subset1,subset2,subset]))
+#DATA TRANSFORMATION
+df['ChestPain']=df['ChestPain'].replace('typical',0)
+df['ChestPain']=df['ChestPain'].replace('asymptomatic',1)
+df['ChestPain']=df['ChestPain'].replace('nonanginal',2)
+df['ChestPain']=df['ChestPain'].replace('nontypical',3)
+df
+df['Sex']=df['Sex'].replace(1,'M')
+df['Sex']=df['Sex'].replace(0 ,'F')
+df
+   
+for i in range (len(df["Chol"])):
+  if i>200:
+     df['Chol']=df['Chol'].replace(i,"high")tree.plot_tree(clf)
+else:
+    df['Chol']=df['Chol'].replace(i,"low")
+df
+#DATA MODELLING
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.model_selection import train_test_split
+from sklearn import metrics
+import matplotlib.pyplot as plt
+from sklearn import tree
+feature_cols=['Age','ChestPain','RestBP','Slope',"Fbs",'RestECG','MaxHR']
+X=df[feature_cols] #features
+y=df.AHD #Target variable
+X_train, X_test,y_train,y_test=train_test_split(X,y, test_size=0.3,random_state=1)
+clf=DecisionTreeClassifier(max_depth=2,random_state=0)
+clf=clf.fit(X_train,y_train)
+y_pred=clf.predict(X_test)
+print("Accuracy",metrics.accuracy_score(y_test,y_pred))
+X_test
+df['Ca'].unique()
+df.Ca.value_counts()
+(df['Ca']=="?").sum()
+
+
+
+import requests
+import bs4
+request1=requests.get('https://bit.ly/3MpHH3u')
+request1
+request1.content
+soup=bs4.BeautifulSoup(request1.text)
+soup
+#fetching reviews and comments
+reviews=soup.find_all("div",{'class':'t-ZTKy'});
+for review in reviews:
+    print(review.get_text() + "\n\n" )
+
+#fetch the ratings
+#avg overall ratings
+ratings=soup.find('div',{'class':'_2d4LTz'}).get_text();                                                                    
+print(ratings)
+
+#individual ratings
+individual_ratings=soup.findAll('div',{'class':'_3LWZlK _1BLPMq'});
+for indi_rating in individual_ratings:
+    print(indi_rating.get_text() + "\n")
+
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+df=pd.read_csv('forestfires.csv')
+df
+monthly_fires=df.groupby('month')['X'].sum()
+monthly_fires
+#sort values in descending values
+monthly_fires=monthly_fires.sort_values(ascending=False)
+monthly_fires
+#create bar plot
+plt.bar(monthly_fires.index,monthly_fires.values)
+plt.title('Forest Fires by Month')
+plt.xlabel('Month')
+plt.ylabel('No of fires')
+plt.show()
+#BOXPLOT
+plt.boxplot([df[df['day']=='mon']['X'],
+             df[df['day']=='tue']['X'],
+              df[df['day']=='wed']['X'],
+              df[df['day']=='thu']['X'],
+              df[df['day']=='fri']['X'],
+              df[df['day']=='sat']['X'],
+              df[df['day']=='sun']['X']])
+plt.title('Forest Fires by Month') 
+plt.xlabel('Day of the week')
+plt.ylabel('No of fires')
+plt.show()
+#SCATTERPLOT
+plt.scatter(df['temp'],df['X'])
+plt.title('Temp vs Forest Fires')
+plt.xlabel('Temperature celcius')
+plt.ylabel('No of fires')
+plt.show()
+#HISTOGRAM
+plt.hist(df['X'],bins=20)
+plt.title('Distribution of forest fires')
+plt.xlabel('No of fires')
+plt.ylabel('Frequency')
+plt.show()
+#COMPUTE CORRELATION MATRIX
+corr=df.corr()
+#CREATE HEATMAP
+sns.heatmap(corr,annot=True)
+plt.title('Correlatin matrix')
+plt.show()
